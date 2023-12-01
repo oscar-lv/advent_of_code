@@ -6,7 +6,7 @@ Rust solutions for [Advent of Code](https://adventofcode.com/).
 
 |  Day   |    Title    |                                    Directory                                    | Stars  |
 | :----: | :---------: | :-----------------------------------------------------------------------------: | :----: |
-| Day 1  | Trebuchet?! | [Code](https://github.com/oscar-lv/advent_of_code/tree/master/2023/day1)         |  ⭐️⭐️  |
+| Day 1  | Trebuchet?! | [Code](https://github.com/oscar-lv/advent_of_code/tree/master/2023/day1)        |  ⭐️⭐️  |
 | Day 2  |             |                                                                                 |        |
 | Day 3  |             |                                                                                 |        |
 | Day 4  |             |                                                                                 |        |
