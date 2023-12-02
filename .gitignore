@@ -7,19 +7,19 @@
 # configure your local ignore list.
 
 
-*/*/target
-*/*/Cargo*.toml
-*/*/Cargo.lock
-*/*/build
-*/*/deps
-*/*/examples
-*/*/incremental
-*/*/node_modules
-*/*/src/test/debuginfo
-*/*/src/test/run-make-fulldeps
-*/*/src/test/ui-fulldeps
-*/*/src/test/ui-std-fulldeps
-*/*/src/test/ui-std-full
+*/target
+*/Cargo*.toml
+*/Cargo.lock
+*/build
+*/deps
+*/examples
+*/incremental
+*/node_modules
+*/src/test/debuginfo
+*/src/test/run-make-fulldeps
+*/src/test/ui-fulldeps
+*/src/test/ui-std-fulldeps
+*/src/test/ui-std-full
 
 ## File system
 .DS_Store
