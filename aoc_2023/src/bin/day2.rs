@@ -9,8 +9,9 @@ fn main() {
     println!("Part 2: {}", part2(&input));
 }
 
-// Part 1
+// Function to process the input and return the count
 fn part1(input: &str) -> i32 {
+    // Initialize count and the color map
     let mut count: i32 = 0;
     let map: HashMap<String, i32> = [
         ("red".to_string(), 12),
@@ -20,64 +21,88 @@ fn part1(input: &str) -> i32 {
     .iter()
     .cloned()
     .collect();
-    // Loop through games
-    input.lines().for_each(|game| {
+
+    // Loop through each game in the input
+    for game in input.lines() {
+        // Split the game string into game id and colors
         let game_split: Vec<&str> = game.trim().split(":").collect();
+
+        // Parse the game id from the first part of the split
         let game_id: i32 = game_split[0]
             .replace("Game ", "")
             .replace(":", "")
             .parse()
             .unwrap_or(0);
 
+        // Replace semicolons with commas and split the second part of the split into colors
         let replaced = game_split[1].replace(";", ",");
         let colors: Vec<&str> = replaced.split(",").collect();
-        let mut add_idx: bool = true;
-        for color in colors {
+
+        // Check if all colors in the game meet the condition
+        let add_idx = colors.iter().all(|color| {
             let color = color.trim();
             let elements: Vec<&str> = color.split(" ").collect();
             let number: i32 = elements[0].parse().unwrap();
             let c_string: &str = elements[1];
-            if let Some(&map_value) = map.get(c_string) {
-                if number > map_value {
-                    add_idx = false;
-                }
-            }
-        }
+            map.get(c_string)
+                .map_or(false, |&map_value| number <= map_value)
+        });
+
+        // If all colors meet the condition, add the game id to the count
         if add_idx {
             count += game_id;
         }
-    });
+    }
+
+    // Return the final count
     count
 }
 
 // Part 2
 fn part2(input: &str) -> i32 {
     let mut count: i32 = 0;
-    // Loop through games
-    input.lines().for_each(|game| {
-        let mut map: HashMap<String, i32> = HashMap::new();
-        map.insert("red".to_string(), 0);
-        map.insert("blue".to_string(), 0);
-        map.insert("green".to_string(), 0);
 
+    // Loop through each game in the input
+    for game in input.lines() {
+        // Initialize the color map for this game
+        let mut map: HashMap<String, i32> = [
+            ("red".to_string(), 0),
+            ("blue".to_string(), 0),
+            ("green".to_string(), 0),
+        ]
+        .iter()
+        .cloned()
+        .collect();
+
+        // Split the game string into game id and colors
         let game_split: Vec<&str> = game.trim().split(":").collect();
+
+        // Replace semicolons with commas and split the second part of the split into colors
         let replaced = game_split[1].replace(";", ",");
         let colors: Vec<&str> = replaced.split(",").collect();
+
+        // Loop through each color in the game
         for color in colors {
             let color = color.trim();
             let elements: Vec<&str> = color.split(" ").collect();
             let number: i32 = elements[0].parse().unwrap();
             let c_string: &str = elements[1];
+
+            // If the number for this color is greater than the current value in the map, update the map
             if let Some(&map_value) = map.get(c_string) {
                 if number > map_value {
                     map.insert(c_string.to_string(), number);
                 }
             }
         }
+
+        // Add the product of the values in the map to the count
         count += map.get("red").unwrap_or(&0)
             * map.get("green").unwrap_or(&0)
             * map.get("blue").unwrap_or(&0);
-    });
+    }
+
+    // Return the final count
     count
 }
 
