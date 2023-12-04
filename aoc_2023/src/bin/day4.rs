@@ -1,6 +1,5 @@
 extern crate regex;
 use regex::Regex;
-use std::arch::x86_64::__m128;
 use std::collections::{HashMap, HashSet};
 use std::time::Instant;
 
@@ -31,9 +30,7 @@ fn part1(input: &str) -> i32 {
     let mut sum: i32 = 0;
     input.lines().for_each(|x| {
         // regex to remove "Card 1:" from Card 1: 41 48 83 86 17 | 83 86  6 31 17 9 48 53
-        let re = Regex::new(r"Card \d+: ").unwrap();
-        let line = re.replace_all(x, "");
-        let splits: Vec<&str> = line.split('|').collect();
+        let splits: Vec<&str> = x.split(":").collect::<Vec<&str>>()[1].split('|').collect();
 
         let set_1: HashSet<_> = splits[0].trim().split_whitespace().collect();
         let set_2: HashSet<_> = splits[1].trim().split_whitespace().collect();
@@ -57,7 +54,7 @@ fn part2(input: &str) -> i32 {
         let card_split = x.split(":").collect::<Vec<&str>>();
         let caps = re.captures(card_split[0]).unwrap();
         let id = caps[1].parse::<i32>().unwrap();
-        *cards.entry(id).or_insert(1);
+        let _ = *cards.entry(id).or_insert(1);
 
         let line = card_split[1];
         let splits: Vec<&str> = line.split('|').collect();
