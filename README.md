@@ -7,9 +7,9 @@ Rust solutions for [Advent of Code](https://adventofcode.com/).
 |  Day   |    Title    |                                    Directory                                    | Stars  |
 | :----: | :---------: | :-----------------------------------------------------------------------------: | :----: |
 | Day 1  | Trebuchet?! | [Code](https://github.com/oscar-lv/advent_of_code/tree/master/aoc_2023/src/bin) |  ⭐️⭐️  |
-| Day 2  |             |                                                                                 |        |
-| Day 3  |             |                                                                                 |        |
-| Day 4  |             |                                                                                 |        |
+| Day 2  |             |                                                                                 |  ⭐️⭐️  |
+| Day 3  |             |                                                                                 |  ⭐️⭐️  |
+| Day 4  |             |                                                                                 |  ⭐️⭐️  |
 | Day 5  |             |                                                                                 |        |
 | Day 6  |             |                                                                                 |        |
 | Day 7  |             |                                                                                 |        |

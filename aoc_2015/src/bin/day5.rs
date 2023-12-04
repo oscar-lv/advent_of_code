@@ -7,23 +7,27 @@ fn main() {
 }
 
 fn is_nice(input: &str) -> bool {
-    if input.contains("ab") || input.contains("cd") || input.contains("xy") || input.contains("pq")
+    if input.contains("ab") || input.contains("cd") || input.contains("pq") || input.contains("xy")
     {
-        false
-    } else {
-        let mut vowels: i32 = 0;
-        let twice: bool = false;
-        for i in 0..input.len() {
-            if ["a", "e", "i", "o", "u"].contains(input[i]) {
-                return true;
-            } else {
-                false;
-            }
-        }
+        return false;
     }
-    return false;
-}
 
+    let mut vowels = 0;
+    let mut twice = false;
+    let mut prev_char = '\0';
+
+    for c in input.chars() {
+        if "aeiou".contains(c) {
+            vowels += 1;
+        }
+        if c == prev_char {
+            twice = true;
+        }
+        prev_char = c;
+    }
+
+    vowels >= 3 && twice
+}
 // Part 1
 fn part1(input: &str) -> i32 {
     let mut nice: i32 = 0;
