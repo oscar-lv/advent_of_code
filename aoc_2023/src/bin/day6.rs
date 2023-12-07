@@ -1,7 +1,5 @@
 extern crate regex;
-use regex::Regex;
-use std::collections::{HashMap, HashSet};
-use std::ops::{BitXor, Range};
+use std::ops::BitXor;
 use std::time::Instant;
 
 fn main() {
