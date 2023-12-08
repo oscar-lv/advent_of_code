@@ -2,6 +2,9 @@ extern crate regex;
 use std::collections::HashMap;
 use std::time::Instant;
 
+extern crate rayon;
+use rayon::prelude::*;
+
 fn main() {
     // read file
     let input = std::fs::read_to_string("day8_input.txt").unwrap();
@@ -18,10 +21,18 @@ fn main() {
     // reset timer
     let start = Instant::now();
 
-    println!("Part 2: {}", part2_par(&input));
+    println!("Part 2: {}", part2(&input));
 
     // print time taken by part2
     println!("Time taken by Part 2: {:?}", start.elapsed());
+
+    // reset timer
+    let start = Instant::now();
+
+    println!("Part 2: {}", part2_par(&input));
+
+    // print time taken by part2
+    println!("Time taken by Part 2 (Parallell): {:?}", start.elapsed());
 }
 
 fn parse(input: &str) -> (String, HashMap<String, (String, String)>) {
@@ -78,26 +89,28 @@ fn part1(input: &str) -> usize {
 fn part2(input: &str) -> usize {
     let (directions, map) = parse(input);
     let mut current: Vec<String> = map.keys().filter(|&k| k.ends_with("A")).cloned().collect();
-    let mut all_steps: Vec<usize> = Vec::new();
-    for c in current {
-        let mut step = 0;
-        let mut c = c.to_string();
-        while !c.ends_with("Z") {
-            let (left, right) = map.get(&c).unwrap();
-            if directions.as_bytes()[step % directions.len()] == b'R' {
-                c = right.to_string();
-            } else {
-                c = left.to_string();
+
+    // Process each element in `current` in parallel
+    let all_steps: Vec<usize> = current
+        .iter() // <-- Use a parallel iterator
+        .map(|c| {
+            let mut step = 0;
+            let mut c = c.to_string();
+            while !c.ends_with("Z") {
+                let (left, right) = map.get(&c).unwrap();
+                if directions.as_bytes()[step % directions.len()] == b'R' {
+                    c = right.to_string();
+                } else {
+                    c = left.to_string();
+                }
+                step += 1;
             }
-            step += 1;
-        }
-        all_steps.push(step.try_into().unwrap());
-    }
+            step
+        })
+        .collect();
+
     lcm_of_list(&all_steps) as usize
 }
-
-extern crate rayon;
-use rayon::prelude::*;
 
 // parrallel version of part2
 fn part2_par(input: &str) -> usize {
