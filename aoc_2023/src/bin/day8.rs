@@ -38,7 +38,7 @@ fn main() {
 fn parse(input: &str) -> (String, HashMap<String, (String, String)>) {
     let (directions, rest) = input.split_once("\n\n").unwrap();
     let mut map: HashMap<String, (String, String)> = HashMap::new();
-    let rest = rest.split("\n").for_each(|l| {
+    rest.split("\n").for_each(|l| {
         let (key, values) = l.split_once("=").unwrap();
         let (left, right) = values.split_once(",").unwrap();
         map.insert(
@@ -88,7 +88,7 @@ fn part1(input: &str) -> usize {
 
 fn part2(input: &str) -> usize {
     let (directions, map) = parse(input);
-    let mut current: Vec<String> = map.keys().filter(|&k| k.ends_with("A")).cloned().collect();
+    let current: Vec<String> = map.keys().filter(|&k| k.ends_with("A")).cloned().collect();
 
     // Process each element in `current` in parallel
     let all_steps: Vec<usize> = current

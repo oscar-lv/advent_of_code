@@ -1,5 +1,3 @@
-extern crate regex;
-use regex::Regex;
 use std::collections::{HashMap, HashSet};
 use std::ops::Range;
 use std::time::Instant;
