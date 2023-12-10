@@ -38,7 +38,13 @@ fn first_differences(line: Vec<i32>) -> Vec<i32> {
     differences
 }
 
-// Process hands, establish rankings within strength groups and determine rank of each hand
+fn parse(input: &str) -> Vec<i32> {
+    input
+        .split_whitespace()
+        .map(|x| x.parse::<i32>().unwrap())
+        .collect()
+}
+// // Process hands, establish rankings within strength groups and determine rank of each hand
 fn part1(input: &str) -> i32 {
     input
         .lines()
