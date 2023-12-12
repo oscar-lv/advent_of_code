@@ -83,6 +83,7 @@ impl Grid {
             return 0;
         }
         let c = self.grid[y as usize][x as usize];
+        // println!("{}", c);
         self.visited[y as usize][x as usize] = 1;
 
         let directions = Grid::get_directions(c);
