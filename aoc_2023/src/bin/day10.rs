@@ -170,14 +170,13 @@ mod day10 {
     use super::*;
     #[test]
     fn test_part_1() {
-        let test_input = std::fs::read_to_string("src/bin/day10_input.txt").unwrap();
+        let test_input = std::fs::read_to_string("src/bin/day10_test.txt").unwrap();
         let result = part1(&test_input);
         assert_eq!(result, 8);
     }
     #[test]
     fn test_part_2() {
-        let test_input = std::fs::read_to_string("src/bin/day10_test.txt").unwrap();
         let result = part2();
-        assert_eq!(result, 2);
+        assert_eq!(result, 453);
     }
 }

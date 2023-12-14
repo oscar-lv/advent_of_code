@@ -1,8 +1,7 @@
-use cached::proc_macro::cached;
 use std::time::Instant;
 fn main() {
     // read file
-    let input = std::fs::read_to_string("day12_input.txt").unwrap();
+    let input = std::fs::read_to_string("src/bin/day13_input.txt").unwrap();
 
     // start timer
     let start = Instant::now();
@@ -22,73 +21,108 @@ fn main() {
     println!("Time taken by Part 2: {:?}", start.elapsed());
 }
 
-#[cached(
-    key = "String",
-    convert = r#"{format!("{:?}{:?}{:?}", s, in_group, cons)}"#
-)]
-fn solve(s: &[u8], in_group: Option<usize>, cons: &[usize]) -> usize {
-    if s.is_empty() {
-        return match in_group {
-            Some(n) if cons == &[n] => 1,
-            None if cons.is_empty() => 1,
-            _ => 0,
-        };
+fn parse(input: &str) -> (Vec<String>, Vec<String>) {
+    let lines: Vec<&str> = input.lines().collect();
+    let rows: Vec<String> = lines
+        .iter()
+        .map(|line| line.replace(".", "0").replace("#", "1"))
+        .collect();
+
+    let max_length = lines[0].len();
+    let mut columns: Vec<String> = Vec::new();
+
+    for i in 0..max_length {
+        let column: String = lines
+            .iter()
+            .map(|line| line.chars().nth(i).unwrap())
+            .collect();
+        columns.push(column.replace(".", "0").replace("#", "1"));
     }
-    match (s[0], in_group, cons) {
-        (b'.', None, _) | (b'?', None, []) => solve(&s[1..], None, cons),
-        (b'.' | b'?', Some(n), [e, ..]) if n == *e => solve(&s[1..], None, &cons[1..]),
-        (b'#' | b'?', Some(n), [e, ..]) if n < *e => solve(&s[1..], Some(n + 1), cons),
-        (b'#', None, [_, ..]) => solve(&s[1..], Some(1), cons),
-        (b'?', None, _) => solve(&s[1..], None, cons) + solve(&s[1..], Some(1), cons),
-        _ => 0,
-    }
+
+    (rows, columns)
 }
 
-fn parse(input: &str) -> Vec<(&[u8], Vec<usize>)> {
-    input
-        .lines()
-        .map(|l| {
-            let (sequence, results) = l.split_once(" ").unwrap();
-            (
-                sequence.as_bytes(),
-                results
-                    .split(',')
-                    .map(|x| x.parse::<usize>().unwrap())
-                    .collect::<Vec<usize>>(),
-            )
-        })
-        .collect()
+fn symmetric<T: std::cmp::PartialEq>(arr: Vec<T>) -> usize {
+    for center in 0..arr.len() - 1 {
+        if arr[center] == arr[center + 1] {
+            let mut left: i32 = center as i32 - 1;
+            let mut right: usize = center + 2;
+
+            while left >= 0 && right < arr.len() && arr[left as usize] == arr[right] {
+                left -= 1;
+                right += 1;
+            }
+
+            if left < 0 || right >= arr.len() {
+                return (center + 1);
+            }
+        }
+    }
+    0
+}
+
+fn diff_in_strings(a: &String, b: &String) -> usize {
+    a.chars()
+        .zip(b.chars())
+        .map(|(x, y)| (x as i32 - y as i32).abs() as usize)
+        .sum()
+}
+
+fn symmetric2(arr: Vec<String>) -> usize {
+    for center in 0..arr.len() - 1 {
+        let mut diff_count = 0;
+        let mut left: i32 = center as i32;
+        let mut right: usize = center + 1;
+
+        while left >= 0 && right < arr.len() && diff_count <= 1 {
+            // increment diff count with bitwise differences
+            diff_count += diff_in_strings(&arr[left as usize], &arr[right]);
+            left -= 1;
+            right += 1;
+        }
+
+        if (left < 0 || right >= arr.len()) && diff_count == 1 {
+            return center + 1;
+        }
+    }
+    0
 }
 
 fn part1(input: &str) -> usize {
-    parse(input)
-        .into_iter()
-        .map(|(s, ns)| solve(s, None, &ns))
+    let inputs = input.split("\n\n").collect::<Vec<&str>>();
+    inputs
+        .iter()
+        .map(|input| {
+            let (rows, columns) = parse(input);
+            symmetric(rows) * 100 + symmetric(columns)
+        })
         .sum()
 }
 
 fn part2(input: &str) -> usize {
-    let new_input = input.lines().fold(String::new(), |mut acc, l| {
-        let (s, n) = l.split_once(" ").unwrap();
-        acc.push_str(&format!("{s}?{s}?{s}?{s}?{s} {n},{n},{n},{n},{n}\n"));
-        acc
-    });
-    part1(&new_input)
+    let inputs = input.split("\n\n").collect::<Vec<&str>>();
+    inputs
+        .iter()
+        .map(|input| {
+            let (rows, columns) = parse(input);
+            symmetric2(rows) * 100 + symmetric2(columns)
+        })
+        .sum()
 }
 
 #[cfg(test)]
-mod day12 {
+mod day13 {
     use super::*;
     #[test]
     fn test_part_1() {
-        let test_input = std::fs::read_to_string("src/bin/day12_test.txt").unwrap();
+        let test_input = std::fs::read_to_string("src/bin/day13_test.txt").unwrap();
         let result = part1(&test_input);
-        assert_eq!(result, 21);
+        assert_eq!(result, 405);
     }
     #[test]
     fn test_part_2() {
-        let test_input = std::fs::read_to_string("src/bin/day12_test.txt").unwrap();
+        let test_input = std::fs::read_to_string("src/bin/day13_test.txt").unwrap();
         let result = part2(&test_input);
-        assert_eq!(result, 525152);
+        assert_eq!(result, 400);
     }
 }

@@ -1,9 +1,7 @@
 extern crate regex;
-use std::collections::HashMap;
 use std::time::Instant;
 
 extern crate rayon;
-use rayon::prelude::*;
 
 fn main() {
     // read file
@@ -38,13 +36,7 @@ fn first_differences(line: Vec<i32>) -> Vec<i32> {
     differences
 }
 
-fn parse(input: &str) -> Vec<i32> {
-    input
-        .split_whitespace()
-        .map(|x| x.parse::<i32>().unwrap())
-        .collect()
-}
-// // Process hands, establish rankings within strength groups and determine rank of each hand
+// Process hands, establish rankings within strength groups and determine rank of each hand
 fn part1(input: &str) -> i32 {
     input
         .lines()
@@ -71,7 +63,6 @@ fn part2(input: &str) -> i32 {
                 .split_whitespace()
                 .map(|x| x.parse::<i32>().unwrap())
                 .collect();
-            let mut sum: i32 = 0;
             let mut line_vec: Vec<Vec<i32>> = Vec::new();
             while !line.iter().all(|x| *x == 0) {
                 line_vec.push(line.clone());

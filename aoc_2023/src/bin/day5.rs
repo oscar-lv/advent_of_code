@@ -1,4 +1,3 @@
-use std::collections::{HashMap, HashSet};
 use std::ops::Range;
 use std::time::Instant;
 
@@ -36,7 +35,7 @@ struct MapRange {
 impl Map {
     fn build(input: &str) -> Map {
         let map_ranges: &str = input.split_once("\n").unwrap().1;
-        let mut ranges: Vec<MapRange> = map_ranges
+        let ranges: Vec<MapRange> = map_ranges
             .split("\n")
             .filter(|l| !l.is_empty())
             .map(|l| {

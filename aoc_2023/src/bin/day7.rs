@@ -1,8 +1,4 @@
 extern crate regex;
-use std::cmp::Ordering;
-use std::collections::HashMap;
-use std::io::Write;
-use std::ops::BitXor;
 use std::time::Instant;
 
 fn main() {
@@ -28,7 +24,6 @@ fn main() {
 }
 
 struct Hand {
-    cards: String,
     strength: u32,
     bid: i32,
 }
@@ -49,7 +44,6 @@ impl Hand {
                 n => n - b'0' - 2,
             };
             ranks[card as usize] += 1;
-            power |= (card as u32) << 4 * (4 - i);
         }
         ranks.sort_unstable_by(|a, b| b.cmp(a));
         power |= match ranks[0] {
@@ -63,7 +57,6 @@ impl Hand {
         } << 29;
 
         Hand {
-            cards: cards.to_string(),
             strength: power,
             bid,
         }
@@ -98,7 +91,6 @@ impl Hand {
         } << 29;
 
         Hand {
-            cards: cards.to_string(),
             strength: power,
             bid,
         }
