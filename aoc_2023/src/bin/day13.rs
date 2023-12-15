@@ -1,4 +1,8 @@
 use std::time::Instant;
+
+extern crate rayon;
+use rayon::prelude::*;
+
 fn main() {
     // read file
     let input = std::fs::read_to_string("src/bin/day13_input.txt").unwrap();
@@ -54,7 +58,7 @@ fn symmetric<T: std::cmp::PartialEq>(arr: Vec<T>) -> usize {
             }
 
             if left < 0 || right >= arr.len() {
-                return (center + 1);
+                return center + 1;
             }
         }
     }
@@ -91,7 +95,7 @@ fn symmetric2(arr: Vec<String>) -> usize {
 fn part1(input: &str) -> usize {
     let inputs = input.split("\n\n").collect::<Vec<&str>>();
     inputs
-        .iter()
+        .par_iter()
         .map(|input| {
             let (rows, columns) = parse(input);
             symmetric(rows) * 100 + symmetric(columns)
@@ -102,7 +106,7 @@ fn part1(input: &str) -> usize {
 fn part2(input: &str) -> usize {
     let inputs = input.split("\n\n").collect::<Vec<&str>>();
     inputs
-        .iter()
+        .par_iter()
         .map(|input| {
             let (rows, columns) = parse(input);
             symmetric2(rows) * 100 + symmetric2(columns)

@@ -1,8 +1,6 @@
 extern crate regex;
 use std::time::Instant;
 
-extern crate rayon;
-
 fn main() {
     // read file
     let input = std::fs::read_to_string("day11_input.txt").unwrap();
