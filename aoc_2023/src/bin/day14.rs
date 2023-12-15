@@ -1,7 +1,5 @@
 use std::time::Instant;
 
-use rayon::result;
-
 fn main() {
     // read file
     let input = std::fs::read_to_string("src/bin/day14_input.txt").unwrap();
@@ -71,7 +69,7 @@ fn map_grid(grid: &Vec<Vec<char>>) -> Vec<Vec<char>> {
     result
 }
 
-fn rotate_grid(grid: &Vec<Vec<char>>) -> Vec<Vec<char>> {
+fn rotate_grid(grid: &[Vec<char>]) -> Vec<Vec<char>> {
     let mut result: Vec<Vec<char>> = vec![vec!['.'; grid.len()]; grid[0].len()];
     for col in 0..grid[0].len() {
         for row in 0..grid.len() {
@@ -81,10 +79,10 @@ fn rotate_grid(grid: &Vec<Vec<char>>) -> Vec<Vec<char>> {
     result
 }
 
-fn count_rocks_on_north_beams(grid: &mut Vec<Vec<char>>) -> usize {
+fn count_rocks_on_north_beams(grid: &[Vec<char>]) -> usize {
     grid.iter()
         .enumerate()
-        .map(|(i, line)| line.iter().filter(|c| **c == 'O').count() * (grid.len() - i))
+        .map(|(i, line)| line.iter().filter(|&&c| c == 'O').count() * (grid.len() - i))
         .sum()
 }
 
@@ -106,15 +104,12 @@ pub fn part2(input: &str) -> usize {
     let mut grid: Vec<Vec<char>> = parse_grid(input);
     let mut results = Vec::new();
     // assumes the cycle is reached within 500 iters
-    loop {
+    while results.len() < 500 {
         let total = count_rocks_on_north_beams(&mut grid);
         results.push(total);
         for _ in 0..4 {
             grid = map_grid(&grid);
             grid = rotate_grid(&grid);
-        }
-        if results.len() > 500 {
-            break;
         }
     }
     // assumes the last number only occurs once in the cycle

@@ -115,6 +115,6 @@ mod day15 {
     fn test_part_2() {
         let test_input = std::fs::read_to_string("src/bin/day15_test.txt").unwrap();
         let result = part2(&test_input);
-        assert_eq!(result, 64);
+        assert_eq!(result, 145);
     }
 }
