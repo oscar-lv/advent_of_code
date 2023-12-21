@@ -128,7 +128,7 @@ impl Grid {
     }
     fn count(&self) -> usize {
         // new set from only the first two elemts in visited
-        let mut visited = self
+        let visited = self
             .visited
             .iter()
             .map(|(x, y, _)| (*x, *y))

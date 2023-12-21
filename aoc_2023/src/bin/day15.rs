@@ -99,7 +99,6 @@ mod day15 {
     use super::*;
     #[test]
     fn test_part_1() {
-        let test_input = std::fs::read_to_string("src/bin/day15_test.txt").unwrap();
         let result = part1("HASH");
         assert_eq!(result, 52);
     }
