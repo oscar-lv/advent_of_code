@@ -1,7 +1,5 @@
 use std::time::Instant;
 
-use rayon::result;
-
 fn main() {
     // read file
     let input = std::fs::read_to_string("src/bin/day15_input.txt").unwrap();
@@ -44,7 +42,7 @@ impl<'s> LensBox<'s> {
         } else {
             let fl = instruction.parse().unwrap();
 
-            if let Some(mut f) =
+            if let Some(f) =
                 self.slots
                     .iter_mut()
                     .find_map(|(l, f)| if *l == box_label { Some(f) } else { None })

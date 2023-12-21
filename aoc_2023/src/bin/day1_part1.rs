@@ -1,9 +1,15 @@
+use std::time::Instant;
+
 fn main() {
     // read file
     let input = std::fs::read_to_string("src/bin/day1_input.txt").unwrap();
 
+    let start = Instant::now();
     // count and print
     println!("Part 1: {}", part1(&input));
+
+    // print time taken by part1
+    println!("Time taken by Part 1: {:?}", start.elapsed());
 }
 
 // Part 1
@@ -18,7 +24,7 @@ fn part1(input: &str) -> i32 {
         // trim whitespace
         let line = line.trim();
         // print line
-        println!("{}", line);
+        // println!("{}", line);
         // create empty dynamic arrary of strings
         let mut numbers: Vec<String> = Vec::new();
         // for each character, check if it is a digit after trimming whitespace
