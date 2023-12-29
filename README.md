@@ -26,10 +26,10 @@ Rust solutions for [Advent of Code](https://adventofcode.com/).
 | Day 18 |             |                                                                                 |  ⭐️⭐️   |
 | Day 19 |             |                                                                                 |  ⭐️⭐️   |
 | Day 20 |             |                                                                                 |  ⭐️⭐️   |
-| Day 21 |             |                                                                                 |       |
-| Day 22 |             |                                                                                 |       |
-| Day 23 |             |                                                                                 |       |
-| Day 24 |             |                                                                                 |       |
-| Day 25 |             |                                                                                 |       |
+| Day 21 |             |                                                                                 |  ⭐️⭐️   |
+| Day 22 |             |                                                                                 |  ⭐️⭐️   |
+| Day 23 |             |                                                                                 |  ⭐️⭐️   |
+| Day 24 |             |                                                                                 |  ⭐️⭐️   |
+| Day 25 |             |                                                                                 |  ⭐️⭐️   |
 
 <sub> Table courtesy of gitlab.com/loicdiridollou
